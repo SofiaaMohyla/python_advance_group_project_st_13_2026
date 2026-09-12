@@ -25,7 +25,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'profile' %}">Профіль</a>
                         </li>
-                       <form method="post" action="{% url 'logout' %}" class="d-inline">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'notebook_list' %}">Електронний щоденник</a>
+                        </li>
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-link nav-link" style="text-decoration: none;">Вийти</button>
                         </form>
