@@ -5,7 +5,6 @@
 {% block content %}
 <div class="container">
     <h2 class="text-center my-4">Редагування профілю</h2>
-
     <form method="post" class="p-4 border rounded bg-light shadow-sm">
         {% csrf_token %}
         <!-- Виведення помилок -->
@@ -27,17 +26,14 @@
             <label for="username" class="form-label">Ім'я користувача</label>
             {{ form.username|add_class:"form-control" }}
         </div>
-
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             {{ form.email|add_class:"form-control" }}
         </div>
-
         <div class="mb-3">
             <label for="first_name" class="form-label">Ім'я</label>
             {{ form.first_name|add_class:"form-control" }}
         </div>
-
         <div class="mb-3">
             <label for="last_name" class="form-label">Прізвище</label>
             {{ form.last_name|add_class:"form-control" }}
@@ -48,8 +44,6 @@
     </form>
 
     <!-- Повернення до профілю -->
-    <div class="text-center mt-3">
-        <a href="{% url 'profile' %}" class="btn btn-secondary">Назад до профілю</a>
-    </div>
+    <div class="text-center mt-3"><a href="{% url 'profile' %}" class="btn btn-secondary">Назад до профілю</a></div>
 </div>
 {% endblock %}

@@ -24,5 +24,4 @@ class StudentGrade(models.Model):
         verbose_name = 'Оцінка'
         verbose_name_plural = 'Оцінки'
 
-    def __str__(self):
-        return f'{self.student.username} - {self.subject} - {self.grade}'
+    def __str__(self): return f'{self.student.username} - {self.subject} - {self.grade}'

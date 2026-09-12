@@ -1,7 +1,5 @@
 from django import forms
-
 from .models import StudentGrade
-
 
 class StudentGradeForm(forms.ModelForm):
     class Meta:
