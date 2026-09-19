@@ -10,11 +10,9 @@ class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
 
-
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'authentication/edit_profile.html'
     form_class = UserProfileForm
     success_url = reverse_lazy('profile')
 
-    def get_object(self):
-        return self.request.user
+    def get_object(self): return self.request.user

@@ -5,7 +5,6 @@
     <h2>Мій щоденник</h2>
     <a href="{% url 'notebook_create' %}" class="btn btn-primary">+ Новий запис</a>
 </div>
-
 {% if entries %}
     {% for entry in entries %}
         <div class="card mb-3 shadow-sm">
@@ -18,7 +17,5 @@
             </div>
         </div>
     {% endfor %}
-{% else %}
-    <div class="alert alert-info">У вас ще немає записів у щоденнику. Натисніть “+ Новий запис”, щоб створити перший.</div>
-{% endif %}
+{% else %} <div class="alert alert-info">У вас ще немає записів у щоденнику. Натисніть “+ Новий запис”, щоб створити перший.</div> {% endif %}
 {% endblock %}

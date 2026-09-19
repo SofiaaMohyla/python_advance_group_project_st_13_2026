@@ -1,13 +1,10 @@
 {% extends 'base.html' %}
-
 {% block title %}Підтвердження видалення{% endblock %}
-
 {% block content %}
 <div class="card shadow-sm">
     <div class="card-body">
         <h3>Видалити оцінку?</h3>
         <p>Ви впевнені, що хочете видалити оцінку для <strong>{{ object.student.username }}</strong> з предмету <strong>{{ object.subject }}</strong>?</p>
-
         <form method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Так, видалити</button>
