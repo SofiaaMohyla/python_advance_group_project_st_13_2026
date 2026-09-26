@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from authentication.models import CustomUser
+from django.conf import settings
 
 class Advert(models.Model):
     class Priority(models.TextChoices):
@@ -12,7 +12,7 @@ class Advert(models.Model):
     is_active = models.BooleanField(default=False)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=255)
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="adverts")    
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="adverts")    
     image = models.ImageField(
         upload_to="adverts/",
         verbose_name="Оголошення",
@@ -20,6 +20,6 @@ class Advert(models.Model):
     )
     datetime_from = models.DateTimeField(default=timezone.now) 
     datetime_to = models.DateTimeField(default=timezone.now) 
-    priority = models.IntegerField(choices=Priority.choices, default=Priority.INFO)
+    priority = models.CharField(max_length=255, choices=Priority.choices, default=Priority.INFO)
     created_at = models.DateTimeField(auto_now_add=True)
 
