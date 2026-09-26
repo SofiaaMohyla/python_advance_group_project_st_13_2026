@@ -26,7 +26,7 @@
                     <td>{{ grade.subject }}</td>
                     <td><span class="badge bg-success fs-6">{{ grade.grade }}</span></td>
                     <td>{{ grade.comment|default:'—' }}</td>
-                    <td>{{ grade.updated_at|date:"d.m.Y H:i" }}</td>
+                    <td><time datetime="{{ grade.updated_at|date:'c' }}" data-local-time>{{ grade.updated_at|date:"d.m.Y H:i" }}</time></td>
                     {% if user.is_authenticated and user.is_staff or user.role == 'admin' %}
                         <td>
                             <a href="{% url 'notebook_update' grade.pk %}" class="btn btn-sm btn-warning">Редагувати</a>
@@ -38,4 +38,19 @@
         </tbody>
     </table>
 </div>
+<script>
+    document.querySelectorAll('[data-local-time]').forEach((element) => {
+        const date = new Date(element.dateTime);
+        if (!Number.isNaN(date.getTime())) {
+            element.textContent = new Intl.DateTimeFormat('uk-UA', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(date);
+        }
+    });
+</script>
 {% endblock %}
