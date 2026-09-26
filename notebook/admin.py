@@ -8,5 +8,4 @@ class StudentGradeAdmin(admin.ModelAdmin):
     search_fields = ('student__username', 'subject', 'comment')
 
     @admin.display(description='Дата')
-    def updated_at_formatted(self, obj):
-        return obj.updated_at.strftime('%d.%m.%Y %H:%M')
+    def updated_at_formatted(self, obj): return obj.updated_at.strftime('%d.%m.%Y %H:%M')
