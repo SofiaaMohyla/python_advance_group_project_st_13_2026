@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ object.title }}</h2>
+    <p>{{ object.content }}</p>
+
+    <a href="{% url 'group_news:news_list' %}">Назад</a>
+    <a href="{% url 'group_news:news_delete' object.pk%}" style="color: red;">Видалити</a>
+{% endblock %}
