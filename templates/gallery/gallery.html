@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Галерея{% endblock %}
+
+{% block content %}
+
+<h1>Галерея</h1>
+
+<div class="mb-4">
+    {% if user.is_authenticated and user.can_upload %}
+        <a href="{% url 'upload_gallery' %}" class="btn btn-primary">
+            Створити
+        </a>
+    {% endif %}
+</div>
+
+{% for material in materials %}
+
+    {% if material.media_type == 'photo' %}
+        <img src="{{ material.file.url }}" width="300">
+    {% elif material.media_type == 'video' %}
+        <video controls width="300">
+            <source src="{{ material.file.url }}">
+        </video>
+    {% endif %}
+
+    <p>Автор: {{ material.uploaded_by.username }}</p>
+    {% if material.uploaded_by == user or user.role == 'moderator' or user.role == 'admin' %}
+        <a href="{% url 'delete_gallery' material.pk %}" class="btn btn-danger btn-sm">
+            Видалити
+        </a>
+    {% endif %}
+
+{% empty %}
+    <p>Галерея поки порожня.</p>
+{% endfor %}
+<div class="mt-4">
+    {% if materials.has_previous %}
+        <a href="?page={{ materials.previous_page_number }}">Назад</a>
+    {% endif %}
+
+    <span>
+        Страница {{ materials.number }} из {{ materials.paginator.num_pages }}
+    </span>
+
+    {% if materials.has_next %}
+        <a href="?page={{ materials.next_page_number }}">Вперёд</a>
+    {% endif %}
+</div>
+{% endblock %}
