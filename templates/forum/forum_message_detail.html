@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Деталі повідомлення{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <!-- заголовок -->
+                    <h1 class="fw-bold mb-4">
+                        {{ message.title }}
+                    </h1>
+
+                    <!-- автор та дата -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <small class="text-muted">
+                                Автор:
+                                <strong>{{ message.author.username }}</strong>
+                            </small>
+                        </div>
+                        <div>
+                            <small class="text-muted">
+                                {{ message.created_at|date:"d.m.Y H:i" }}
+                            </small>
+                        </div>
+                        {%if message.created_at != message.updated_at %}
+                            <div>
+                                <small class="text-muted">
+                                    Оновлено:
+                                    {{ message.updated_at|date:"d.m.Y H:i" }}
+                                </small>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- текст повідомлення -->
+                    <p class="card-text">
+                        {{ message.text }}
+                    </p>
+
+                    <!-- кнопка назад -->
+                    <div class="mt-4">
+                        <a href="{% url 'forum_message_list' %}" class="btn btn-secondary">
+                            Назад до списку повідомлень
+                        </a>
+                    </div>
+
+                    {% if user == message.author or user.role == 'moderator' or user.role == 'admin' %}
+
+                        <!-- кнопка редагувати -->
+                        <a href="{% url 'forum_message_update' message.id %}" class="btn btn-primary mt-2">
+                            Редагувати
+                        </a>
+
+                        <!-- кнопка видалити -->
+                        <form method="post" action="{% url 'forum_message_delete' message.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger mt-2">
+                                Видалити
+                            </button>
+                        </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+                    

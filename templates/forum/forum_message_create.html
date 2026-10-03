@@ -1,0 +1,91 @@
+{% extends 'base.html' %}   
+
+{% block title %}Створити повідомлення{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <!-- повідомлення -->
+
+                    <h2 class="fvw-bold mb-4">
+                        Створити повідомлення
+                    </h2>   
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <!-- заголовок -->
+
+                        <div class="mb-3">
+
+                            <label for="id_title" class="form-label">
+                                Заголовок
+                            </label>
+
+                            {{form.title}}
+                            
+                            {% if form.title.errors %}
+                                <div class="text-danger">
+                                    {{ form.title.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <!-- текст повідомлення -->
+
+                        <div class="mb-3">
+
+                            <label for="id_text" class="form-label">
+                                Текст повідомлення
+                            </label>
+
+                            {{form.text}}
+
+                            {% if form.text.errors %}
+                                <div class="text-danger">
+                                    {{ form.text.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <!-- кнопки -->
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                Створити
+                            </button>
+
+                            <a href="{% url 'forum_message_list' %}" class="btn btn-secondary">
+                                Відмінити
+                            </a>
+
+                        </div>
+
+                    </form>
+               
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+

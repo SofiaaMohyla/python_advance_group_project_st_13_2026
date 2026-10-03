@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'events_calendar'
+    'forum',
 ]
 
 MIDDLEWARE = [
