@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Видалення новини</h2>
+    <p>Чи хочете ви видалити новину?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Видалити</button>
+        <a class="btn btn-primary" href="{% url 'group_news:news_detail' object.pk %}">Скасувати</a>
+    </form>
+{% endblock %}

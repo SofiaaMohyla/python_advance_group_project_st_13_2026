@@ -38,12 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
+
     'events_calendar'
     'forum',
     'gallery',
     'notebook',
 
     'mypolls',
+
+    'group_news',
+
 ]
 
 MIDDLEWARE = [
@@ -144,6 +148,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
+
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/notebook/'
+
+LOGIN_REDIRECT_URL = '/auth/profile/'
+
+LOGIN_URL = 'login'
+

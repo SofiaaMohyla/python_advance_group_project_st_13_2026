@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ object.title }}</h2>
+    <p>{{ object.content }}</p>
+
+    <a class="btn btn-primary" href="{% url 'group_news:news_list' %}">Назад</a>
+    <a class="btn btn-danger" href="{% url 'group_news:news_delete' object.pk%}">Видалити</a>
+{% endblock %}
