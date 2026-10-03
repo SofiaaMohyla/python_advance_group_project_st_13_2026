@@ -4,6 +4,6 @@
     <h2>{{ object.title }}</h2>
     <p>{{ object.content }}</p>
 
-    <a href="{% url 'group_news:news_list' %}">Назад</a>
-    <a href="{% url 'group_news:news_delete' object.pk%}" style="color: red;">Видалити</a>
+    <a class="btn btn-primary" href="{% url 'group_news:news_list' %}">Назад</a>
+    <a class="btn btn-primary" href="{% url 'group_news:news_delete' object.pk%}" style="color: red;">Видалити</a>
 {% endblock %}
