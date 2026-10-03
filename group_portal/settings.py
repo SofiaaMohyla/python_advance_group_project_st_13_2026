@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'events_calendar'
     'forum',
     'gallery',
+    'notebook'
 ]
 
 MIDDLEWARE = [
@@ -135,5 +136,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
+<<<<<<< HEAD
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
+=======
+LOGIN_REDIRECT_URL = '/notebook/'
+>>>>>>> notebook

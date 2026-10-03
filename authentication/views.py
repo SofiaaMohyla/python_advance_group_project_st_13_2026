@@ -8,6 +8,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic.edit import UpdateView
 from django.views.generic import TemplateView
+from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from .forms import UserProfileForm
 from events_calendar.models import Event
@@ -92,7 +96,15 @@ def delete_event(request, event_id):
         event.delete()
 
     return redirect('edit_event')
+class RegisterView(CreateView):
+    template_name = 'authentication/register.html'
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('notebook_list')
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        login(self.request, self.object)
+        return redirect('notebook_list')
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'authentication/edit_profile.html'
@@ -108,3 +120,4 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
             self.request.user.is_superuser or self.request.user.role == 'admin'
         )
         return kwargs
+    def get_object(self): return self.request.user

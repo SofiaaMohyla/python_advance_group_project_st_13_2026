@@ -14,7 +14,6 @@ class CustomUserCreationForm(UserCreationForm):
             raise ValidationError('Користувач із таким іменем уже існує.')
         return username
 
-
 class UserProfileForm(forms.ModelForm):
     def __init__(self, *args, can_edit_role=False, **kwargs):
         super().__init__(*args, **kwargs)
