@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+Видалити голосування
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-card">
+
+    <div style="
+        font-size: 50px;
+        margin-bottom: 15px;
+    ">
+        🗑️
+    </div>
+
+
+    <h1>
+        Видалити голосування?
+    </h1>
+
+
+    <p style="
+        color: #6b7280;
+        margin-bottom: 20px;
+    ">
+
+        Ви впевнені, що хочете видалити це голосування?
+
+    </p>
+
+
+    <div style="
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 25px;
+    ">
+
+        <h2>
+            {{ poll.title }}
+        </h2>
+
+        {% if poll.description %}
+
+            <p style="
+                margin-top: 8px;
+                color: #6b7280;
+            ">
+                {{ poll.description }}
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="actions">
+
+            <button
+                type="submit"
+                class="btn btn-danger">
+
+                🗑️ Так, видалити
+
+            </button>
+
+
+            <a
+                href="{% url 'poll_list' %}"
+                class="btn btn-secondary">
+
+                Скасувати
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
