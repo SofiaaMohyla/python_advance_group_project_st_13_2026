@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}
+Голосування
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>🗳️ Голосування</h1>
+
+    <p>
+        Оберіть голосування та залиште свій голос.
+    </p>
+
+</div>
+
+
+{% if user.is_staff or user.is_superuser %}
+
+    <p style="margin-bottom: 25px;">
+
+        <a href="{% url 'poll_create' %}"
+           class="btn btn-primary">
+
+            ＋ Створити голосування
+
+        </a>
+
+    </p>
+
+{% endif %}
+
+
+{% if polls %}
+
+<div class="poll-grid">
+
+    {% for poll in polls %}
+
+    <div class="poll-card">
+
+        <div class="poll-icon">
+            🗳️
+        </div>
+
+        <h2 class="poll-title">
+
+            <a href="{% url 'poll_detail' poll.id %}">
+                {{ poll.title }}
+            </a>
+
+        </h2>
+
+
+        <p class="poll-description">
+
+            {% if poll.description %}
+
+                {{ poll.description }}
+
+            {% else %}
+
+                Без опису
+
+            {% endif %}
+
+        </p>
+
+
+        <div class="poll-info">
+
+            <p>
+                👤 Автор:
+                {{ poll.created_by }}
+            </p>
+
+            <p>
+                🕒
+                {{ poll.created_at|date:"d.m.Y H:i" }}
+            </p>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a href="{% url 'poll_detail' poll.id %}"
+               class="btn btn-primary">
+
+                Голосувати
+
+            </a>
+
+
+            <a href="{% url 'poll_results' poll.id %}"
+               class="btn btn-secondary">
+
+                Результати
+
+            </a>
+
+
+            {% if user.is_staff or user.is_superuser %}
+
+                <a href="{% url 'poll_edit' poll.id %}"
+                   class="btn btn-warning">
+
+                    ✏️
+
+                </a>
+
+                <a href="{% url 'poll_delete' poll.id %}"
+                   class="btn btn-danger">
+
+                    🗑️
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% else %}
+
+<div class="empty">
+
+    <div class="empty-icon">
+        🗳️
+    </div>
+
+    <h2>
+        Голосувань поки немає
+    </h2>
+
+    <p>
+        Нові голосування з'являться тут.
+    </p>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

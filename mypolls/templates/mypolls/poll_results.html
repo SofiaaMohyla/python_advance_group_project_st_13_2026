@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+Результати
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-card">
+
+    <h1>
+        📊 Результати
+    </h1>
+
+    <h2 style="margin-bottom: 10px;">
+        {{ poll.title }}
+    </h2>
+
+    <p style="color:#6b7280; margin-bottom:25px;">
+
+        Всього проголосувало:
+
+        <strong>
+            {{ total_votes }}
+        </strong>
+
+    </p>
+
+
+    {% for result in results %}
+
+        <div class="result-row">
+
+            <div class="result-top">
+
+                <strong>
+                    {{ result.choice.text }}
+                </strong>
+
+                <span>
+                    {{ result.votes }} голосів
+                </span>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <p>
+            Поки що немає результатів.
+        </p>
+
+    {% endfor %}
+
+
+    <div class="actions">
+
+        <a
+            href="{% url 'poll_detail' poll.id %}"
+            class="btn btn-primary">
+
+            🗳️ Голосувати
+
+        </a>
+
+        <a
+            href="{% url 'poll_list' %}"
+            class="btn btn-secondary">
+
+            ← Назад
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

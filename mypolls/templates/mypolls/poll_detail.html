@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ poll.title }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-card">
+
+    <h1>
+        🗳️ {{ poll.title }}
+    </h1>
+
+
+    {% if poll.description %}
+
+        <p style="color: #6b7280; margin-bottom: 25px;">
+            {{ poll.description }}
+        </p>
+
+    {% endif %}
+
+
+    {% if current_vote %}
+
+        <div class="choice">
+
+            <strong>
+                Ваш поточний вибір:
+            </strong>
+
+            {{ current_vote.choice.text }}
+
+        </div>
+
+        <p style="color:#6b7280; margin-bottom:20px;">
+            Ви можете змінити свій голос.
+        </p>
+
+    {% endif %}
+
+
+    {% if error %}
+
+        <div style="
+            background:#fee2e2;
+            color:#b91c1c;
+            padding:12px;
+            border-radius:9px;
+            margin-bottom:20px;
+        ">
+
+            {{ error }}
+
+        </div>
+
+    {% endif %}
+
+
+    <form method="post">
+
+        {% csrf_token %}
+
+
+        {% for choice in poll.choices.all %}
+
+            <div class="choice">
+
+                <label>
+
+                    <input
+                        type="radio"
+                        name="choice"
+                        value="{{ choice.id }}"
+
+                        {% if current_vote %}
+                            {% if current_vote.choice.id == choice.id %}
+                                checked
+                            {% endif %}
+                        {% endif %}
+                    >
+
+                    {{ choice.text }}
+
+                </label>
+
+            </div>
+
+        {% empty %}
+
+            <p>
+                У цьому голосуванні немає варіантів відповіді.
+            </p>
+
+        {% endfor %}
+
+
+        <div class="actions">
+
+            {% if poll.choices.all %}
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    🗳️ Проголосувати
+
+                </button>
+
+            {% endif %}
+
+
+            <a
+                href="{% url 'poll_results' poll.id %}"
+                class="btn btn-secondary">
+
+                📊 Результати
+
+            </a>
+
+
+            <a
+                href="{% url 'poll_list' %}"
+                class="btn btn-secondary">
+
+                ← Назад
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

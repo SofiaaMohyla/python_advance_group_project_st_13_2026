@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+Створити голосування
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-card">
+
+    <h1>
+        ➕ Створити голосування
+    </h1>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                Створити
+
+            </button>
+
+            <a
+                href="{% url 'poll_list' %}"
+                class="btn btn-secondary">
+
+                Скасувати
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
