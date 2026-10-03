@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Керування завантаженнями{% endblock %}
+{% block content %}
+<h1>Керування завантаженнями</h1>
+{% for user in users %}
+    <p>
+        {{ user.username }}
+
+        {% if user.can_upload %}
+            <span>Завантаження дозволені</span>
+        {% else %}
+            <span>Завантаження заборонені</span>
+        {% endif %}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+
+        {% if user.can_upload %}
+            <button type="submit">Заборонити</button>
+        {% else %}
+            <button type="submit">Дозволити</button>
+        {% endif %}
+    </form>
+{% endfor %}
+{% endblock %}
