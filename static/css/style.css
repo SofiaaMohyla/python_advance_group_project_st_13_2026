@@ -36,3 +36,37 @@ footer {
     color: white;
     padding: 10px 0;
 }
+
+.event-page-illustration {
+    display: block;
+    width: 100%;
+    max-height: 260px;
+    margin: 1rem 0 1.5rem;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.event-calendar-illustration {
+    display: block;
+    width: 100%;
+    max-height: 260px;
+    margin: 1rem 0 1.5rem;
+    object-fit: contain;
+}
+
+.edit-event-illustration {
+    display: block;
+    width: 100%;
+    max-height: 260px;
+    margin: 1rem 0 1.5rem;
+    object-fit: contain;
+}
+
+.delete-event-illustration {
+    display: block;
+    width: 100%;
+    max-height: 190px;
+    margin: 0 auto 1rem;
+    object-fit: contain;
+}
+

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if selected_event %}
+                <h2>Редагувати подію</h2>
+                <p class="text-muted">Ви обрали: {{ selected_event.title }}</p>
+                <form method="POST" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="event_id" value="{{ selected_event.id }}">
+                    <div class="form-group">
+                        <label for="title">Назва події</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ selected_event.title }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Опис</label>
+                        <textarea class="form-control" id="description" name="description" rows="4">{{ selected_event.description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Місцезнаходження</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{ selected_event.location|default:'' }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зберегти</button>
+                    <a href="{% url 'edit_event' %}" class="btn btn-secondary">До вибору події</a>
+                </form>
+            {% else %}
+                <h2>Оберіть подію для редагування</h2>
+                <img class="edit-event-illustration" src="{% static 'redacting.png' %}" alt="Ілюстрація редагування подій">
+                {% if events %}
+                    <div class="list-group mt-4">
+                        {% for event in events %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center gap-3">
+                                <a href="{% url 'edit_event' %}?event_id={{ event.id }}" class="text-decoration-none text-dark flex-grow-1">
+                                    <strong>{{ event.title }}</strong>
+                                    <small class="d-block text-muted">{{ event.start_time|date:'d.m.Y' }}{% if event.location %} · {{ event.location }}{% endif %}</small>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteEventModal{{ event.id }}">
+                                    Видалити
+                                </button>
+                            </div>
+                            <div class="modal fade" id="deleteEventModal{{ event.id }}" tabindex="-1" aria-labelledby="deleteEventLabel{{ event.id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteEventLabel{{ event.id }}">Видалити подію?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img class="delete-event-illustration" src="{% static 'deleting-event.png' %}" alt="Ілюстрація видалення події">
+                                            Ви впевнені, що хочете видалити подію «{{ event.title }}»?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                                            <form method="POST" action="{% url 'delete_event' event.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger">Так, видалити</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if events.has_other_pages %}
+                        <nav aria-label="Навігація сторінками подій">
+                            <ul class="pagination justify-content-center mt-4">
+                                {% if events.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ events.previous_page_number }}">Попередня</a>
+                                    </li>
+                                {% endif %}
+                                {% for page_number in events.paginator.page_range %}
+                                    <li class="page-item{% if events.number == page_number %} active{% endif %}">
+                                        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                    </li>
+                                {% endfor %}
+                                {% if events.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ events.next_page_number }}">Наступна</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted mt-4">Поки що немає подій для редагування.</p>
+                {% endif %}
+                <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Назад на головну</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

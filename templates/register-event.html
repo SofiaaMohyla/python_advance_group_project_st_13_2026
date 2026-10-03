@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>Реєстрація на подію</h2>
+            <form method="POST" class="mt-4">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="event">Виберіть подію</label>
+                    <select class="form-control" id="event" name="event" required>
+                        <option value="">-- Виберіть подію --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Ваше ім'я</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Зареєструватися</button>
+                <a href="{% url 'events' %}" class="btn btn-secondary">Назад</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
