@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Редагувати{% else %}Створити{% endif %} оголошення{% endblock %}
+{% block content %}
+<h1 class="h4">{% if object %}Редагувати{% else %}Створити{% endif %} оголошення</h1>
+{% if form.errors %}
+        <div class="alert alert-danger">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+<form method="post" class="mt-3" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Включено</label>
+    {{ form.is_active }}
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Опис</label>
+    {{ form.description }}
+  </div>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Пріоритет</label>
+      {{ form.priority }}
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Дата початку</label>
+    {{ form.datetime_from }}
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Дата завершення</label>
+    {{ form.datetime_to }}
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Назва</label>
+    {{ form.title }}
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Опис</label>
+    {{ form.description }}
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Зображення</label>
+    {{ form.image }}
+  </div>
+  <div class="mt-4 d-flex gap-2">
+    <button class="btn btn-primary" type="submit">Зберегти</button>
+    <a class="btn btn-secondary" href="{% url 'advert_all_list' %}">Скасувати</a>
+  </div>
+</form>
+{% endblock %}

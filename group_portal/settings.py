@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
 
+
     'events_calendar'
     'forum',
     'gallery',
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
 
     'group_news',
 
+
+    'advert'
 ]
 
 MIDDLEWARE = [
