@@ -8,6 +8,7 @@ from .forms import AdvertFilterForm, AdvertForm
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.conf import settings
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 # Create your views here.
 class AdvertListOwner(LoginRequiredMixin, ListView):
@@ -55,7 +56,7 @@ class AdvertList(ListView):
         ctx["filter_form"] = AdvertFilterForm(self.request.GET or None)
         return ctx           
 
-class AdvertCreate(LoginRequiredMixin, CreateView):
+class AdvertCreate(LoginRequiredMixin, CreateView, UserPassesTestMixin):
     model = Advert
     form_class = AdvertForm 
     template_name = "advert/create.html"
@@ -66,6 +67,12 @@ class AdvertCreate(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("advert_detail", kwargs={"slug": self.object.id})
+
+    def test_func(self):
+            if self.request.user.role == "admin" or self.request.user.role == "moderator":
+                return True
+            else:
+                return False
 
 class AdvertDetail(DetailView):
     model = Advert
@@ -82,6 +89,7 @@ class AdvertDelete(LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
     slug_url_kwarg = "slug"
     success_url = reverse_lazy("advert_owner_list")
 
+
 class AdvertUpdate(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     model = Advert
     form_class = AdvertForm
@@ -90,4 +98,4 @@ class AdvertUpdate(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     slug_url_kwarg = "slug" 
     
     def get_success_url(self):
-        return reverse_lazy("advert_detail", kwargs={"slug": self.object.id})    
+        return reverse_lazy("advert_detail", kwargs={"slug": self.object.id})  

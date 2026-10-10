@@ -1,24 +1,39 @@
 {% extends "base.html" %}
 {% block title %}{{ advert.title }}{% endblock %}
 {% block content %}
-<h1 class="h3">{{ advert.title }}</h1>
-<p class="text-muted">
-    {{ advert.get_priority_display }} ·
-  Автор: {{ advert.author }} · Оновлено: {{ advert.created_at|date:"d.m.Y H:i" }}
-</p>
-<div class="mb-3">
-  <img src="{{ advert.image.url }}" class="card-img-top" alt="{{ advert.name|default:'photo' }}" style="max-width:500px">
-</div>  
-<div class="mb-3">{{ advert.description|linebreaks }}</div>
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-primary text-white">
+    <h1 class="h4 mb-0">{{ advert.title }}</h1>
+  </div>
+  <div class="card-body">
+    <p class="text-muted mb-2">
+      <span class="badge bg-info">{{ advert.get_priority_display }}</span>
+      · Автор: <strong>{{ advert.author }}</strong>
+      · Оновлено: {{ advert.created_at|date:"d.m.Y H:i" }}
+    </p>
+    {% if advert.image %}
+    <div class="text-center mb-3">
+      <img src="{{ advert.image.url }}" class="img-fluid rounded" alt="{{ advert.title|default:'photo' }}" style="max-height:400px; object-fit:cover;">
+    </div>
+    {% endif %}
+    <div class="mb-3 fs-5">{{ advert.description|linebreaks }}</div>
 
-{% if user == advert.author %}
-  <a href="{% url 'advert_update' advert.id %}" class="btn btn-outline-primary">Редагувати</a>
-  <a href="{% url 'advert_delete' advert.id %}" class="btn btn-outline-danger">Видалити</a>
-{% endif %}
+    {% if user == advert.author or user.role == "moderator" or user.role == "admin" %}
+      <div class="d-flex gap-2">
+        <a href="{% url 'advert_update' advert.id %}" class="btn btn-outline-primary">
+          <i class="bi bi-pencil-square"></i> Редагувати
+        </a>
+        <a href="{% url 'advert_delete' advert.id %}" class="btn btn-outline-danger">
+          <i class="bi bi-trash"></i> Видалити
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
 
 {% block back %}
-<a href="{% url 'advert_all_list' %}" class="btn btn-outline-primary back-btn">
-    <i class="bi bi-arrow-left"></i> Назад
+<a href="{% url 'advert_all_list' %}" class="btn btn-secondary back-btn">
+    <i class="bi bi-arrow-left"></i> Назад до списку
 </a>
 {% endblock %}
